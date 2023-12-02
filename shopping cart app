@@ -1,0 +1,91 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Structure to represent an item in the cart
+struct Item {
+    string name;
+    double price;
+};
+
+// Shopping Cart class
+class ShoppingCart {
+private:
+    vector<Item> cart; // Vector to store items in the cart
+
+public:
+    // Function to add items to the cart
+    void addItem(const string& itemName, double itemPrice) {
+        Item newItem;
+        newItem.name = itemName;
+        newItem.price = itemPrice;
+        cart.push_back(newItem);
+        cout << itemName << " added to cart." << endl;
+    }
+
+    // Function to display the items in the cart
+    void displayCart() {
+        if (cart.empty()) {
+            cout << "Your cart is empty." << endl;
+        } else {
+            cout << "Items in your cart:" << endl;
+            for (const auto& item : cart) {
+                cout << item.name << " - $" << item.price << endl;
+            }
+        }
+    }
+
+    // Function to calculate the total cost of items in the cart
+    double calculateTotal() {
+        double total = 0.0;
+        for (const auto& item : cart) {
+            total += item.price;
+        }
+        return total;
+    }
+};
+
+int main() {
+    ShoppingCart cart; // Create a ShoppingCart object
+
+    // Menu
+    int choice;
+    do {
+        cout << "\nShopping Cart Menu:" << endl;
+        cout << "1. Add item to cart" << endl;
+        cout << "2. View cart" << endl;
+        cout << "3. Calculate total" << endl;
+        cout << "4. Exit" << endl;
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                string itemName;
+                double itemPrice;
+                cout << "Enter item name: ";
+                cin.ignore();
+                getline(cin, itemName);
+                cout << "Enter item price: $";
+                cin >> itemPrice;
+                cart.addItem(itemName, itemPrice);
+                break;
+            }
+            case 2:
+                cart.displayCart();
+                break;
+            case 3:
+                cout << "Total cost: $" << cart.calculateTotal() << endl;
+                break;
+            case 4:
+                cout << "Exiting the program. Goodbye!" << endl;
+                break;
+            default:
+                cout << "Invalid choice. Please enter a valid option." << endl;
+        }
+    } while (choice != 4);
+
+    return 0;
+}
